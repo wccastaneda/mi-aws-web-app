@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Consola AWS Local</title>
+</head>
+<body>
+  <h1>Consola AWS Local</h1>
+
+  <button onclick="executeCommand('/create-secret', 'POST')">Crear Secret Manager</button>
+  <br><br>
+  <button onclick="executeCommand('/create-bucket', 'POST')">Crear Bucket S3</button>
+  <br><br>
+  <button onclick="executeCommand('/create-jwks', 'POST')">Crear jwks.json en Bucket S3</button>
+  <br><br>
+  <button onclick="executeCommand('/list-secrets', 'GET')">Listar Secrets</button>
+  <br><br>
+  <button onclick="executeCommand('/list-bucket', 'GET')">Listar Bucket S3</button>
+  <br><br>
+  <button onclick="executeCommand('/get-secret', 'GET')">Obtener Valor del Secreto</button>
+  <br><br>
+
+  <h2>Operaciones con variable</h2>
+  <label for="variable">Valor de variable:</label>
+  <input type="text" id="variable" name="variable">
+  <br><br>
+  <button onclick="executeCommand('/view-pem?variable=' + document.getElementById('variable').value, 'GET')">
+    Ver contenido de llave pública PEM
+  </button>
+  <br><br>
+  <button onclick="executeCommand('/delete-resource?variable=' + document.getElementById('variable').value, 'DELETE')">
+    Borrar recurso S3
+  </button>
+  <br><br>
+  <button onclick="executeCommand('/view-jwks', 'GET')">Ver contenido del llavero JWKS</button>
+  <br><br>
+
+  <h2>Resultado</h2>
+  <pre id="result"></pre>
+
+  <script>
+    function executeCommand(url, method) {
+      fetch(url, { method: method })
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('result').innerText = data;
+        })
+        .catch(err => {
+          document.getElementById('result').innerText = 'Error: ' + err;
+        });
+    }
+  </script>
+</body>
+</html>
