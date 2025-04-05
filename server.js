@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 // Endpoint de AWS local
-const awsEndpoint = "http://localhost:4566";
+const awsEndpoint = process.env.AWS_ENDPOINT || "http://localhost:4566";
 
 // Crear Secret Manager
 app.post('/create-secret', (req, res) => {
@@ -33,10 +33,9 @@ app.post('/create-bucket', (req, res) => {
 // Crear el archivo jwks.json en el Bucket S3
 app.post('/create-jwks', (req, res) => {
   const command = `echo '{"keys": []}' | aws --endpoint-url=${awsEndpoint} s3 cp - s3://mi-bucket-local/jwks.json`;
-  // Se especifica el shell bash para manejar la tubería (pipe)
   exec(command, { shell: '/bin/bash' }, (error, stdout, stderr) => {
     if (error) return res.status(500).send(stderr);
-    res.send(stdout);
+    res.send("JWKS creado:" + (stdout ? "\n" + stdout : ""));
   });
 });
 
