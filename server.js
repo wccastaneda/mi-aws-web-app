@@ -86,6 +86,15 @@ app.get('/view-jwks', (req, res) => {
   });
 });
 
+// Ver el contenido del registro histórico de llaves JWK
+app.get('/view-jwks-history', (req, res) => {
+  const command = `aws --endpoint-url=${awsEndpoint} s3 cp s3://mi-bucket-local/jwks-history.txt -`;
+  exec(command, (error, stdout, stderr) => {
+    if (error) return res.status(500).send(stderr);
+    res.send(stdout);
+  });
+});
+
 // Borrar un recurso del bucket S3 (requiere el valor de variable)
 app.delete('/delete-resource', (req, res) => {
   const variable = req.query.variable;
