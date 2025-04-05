@@ -3,40 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <title>Consola AWS Local</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px 0;
+      border: none;
+      background-color: #3498db;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      display: block;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    input[type="text"] {
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 100%;
+      margin: 10px 0;
+    }
+    pre {
+      background: #f8f8f8;
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+  </style>
 </head>
 <body>
-  <h1>Consola AWS Local</h1>
+  <div class="container">
+    <h1>Consola AWS Local</h1>
 
-  <button onclick="executeCommand('/create-secret', 'POST')">Crear Secret Manager</button>
-  <br><br>
-  <button onclick="executeCommand('/create-bucket', 'POST')">Crear Bucket S3</button>
-  <br><br>
-  <button onclick="executeCommand('/create-jwks', 'POST')">Crear jwks.json en Bucket S3</button>
-  <br><br>
-  <button onclick="executeCommand('/list-secrets', 'GET')">Listar Secrets</button>
-  <br><br>
-  <button onclick="executeCommand('/list-bucket', 'GET')">Listar Bucket S3</button>
-  <br><br>
-  <button onclick="executeCommand('/get-secret', 'GET')">Obtener Valor del Secreto</button>
-  <br><br>
+    <button onclick="executeCommand('/create-secret', 'POST')">Crear Secret Manager</button>
+    <button onclick="executeCommand('/create-bucket', 'POST')">Crear Bucket S3</button>
+    <button onclick="executeCommand('/create-jwks', 'POST')">Crear jwks.json en Bucket S3</button>
+    <button onclick="executeCommand('/list-secrets', 'GET')">Listar Secrets</button>
+    <button onclick="executeCommand('/list-bucket', 'GET')">Listar Bucket S3</button>
+    <button onclick="executeCommand('/get-secret', 'GET')">Obtener Valor del Secreto</button>
 
-  <h2>Operaciones con variable</h2>
-  <label for="variable">Valor de variable:</label>
-  <input type="text" id="variable" name="variable">
-  <br><br>
-  <button onclick="executeCommand('/view-pem?variable=' + document.getElementById('variable').value, 'GET')">
-    Ver contenido de llave pública PEM
-  </button>
-  <br><br>
-  <button onclick="executeCommand('/delete-resource?variable=' + document.getElementById('variable').value, 'DELETE')">
-    Borrar recurso S3
-  </button>
-  <br><br>
-  <button onclick="executeCommand('/view-jwks', 'GET')">Ver contenido del llavero JWKS</button>
-  <br><br>
+    <h2>Operaciones con variable</h2>
+    <label for="variable">Valor de variable:</label>
+    <input type="text" id="variable" name="variable">
+    <button onclick="executeCommand('/view-pem?variable=' + document.getElementById('variable').value, 'GET')">
+      Ver contenido de llave pública PEM
+    </button>
+    <button onclick="executeCommand('/delete-resource?variable=' + document.getElementById('variable').value, 'DELETE')">
+      Borrar recurso S3
+    </button>
+    <button onclick="executeCommand('/view-jwks', 'GET')">Ver contenido del llavero JWKS</button>
 
-  <h2>Resultado</h2>
-  <pre id="result"></pre>
+    <h2>Resultado</h2>
+    <pre id="result"></pre>
+  </div>
 
   <script>
     function executeCommand(url, method) {
